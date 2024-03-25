@@ -8,6 +8,7 @@ const io = new Server(server);
 const body_parser = require('body-parser');
 const multerConfig = require('./multerconfig');
 const userRouter = require('./router/user.router');
+const adminRouter = require('./admin/router/admin.route'); 
 const profileController = require('./controllers/profile.controller');
 const UserModel = require('./models/user.models');
 
@@ -41,7 +42,12 @@ app.post('/updateProfilePicture', multerConfig.upload.single('image'), async (re
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 });
+
+//for user routes
 app.use('/', userRouter);
+
+//for admin roytes
+app.use('/admin', adminRouter);
 
 
 io.on('connection', (socket) => {
